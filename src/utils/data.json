@@ -1,0 +1,12 @@
+{
+    "whoIsWorking": [
+        "Kaushik",
+        "Shivam",
+        "Harsh"
+    ],
+    "gradingOptions": [
+        "Excellent",
+        "Satisfactory",
+        "Critical"
+    ]
+}
