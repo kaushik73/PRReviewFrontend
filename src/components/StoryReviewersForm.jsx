@@ -33,7 +33,7 @@ const StoryReviewersForm = ({ onSubmit }) => {
         })
         .then((response) => alert(response.data.message))
         .catch((error) => {
-          alert("Error Saving Story Reviewers Form data!");
+          alert("Error Saving Story Inital Data data!");
           console.log(error);
         });
       formik.resetForm();

@@ -81,11 +81,11 @@ function App() {
           <Link to="/reviewer-form" className="text-blue-600">
             Reviewer Form
           </Link>
-          <Link to="/assignee-form" className="text-blue-600">
+          {/* <Link to="/assignee-form" className="text-blue-600">
             Assignee Form
-          </Link>
+          </Link> */}
           <Link to="/story-reviewers-form" className="text-blue-600">
-            Story Reviewers Form
+            Story Inital Data
           </Link>
           <Link to="/story-reviewers-table" className="text-blue-600">
             Story Reviewers Table

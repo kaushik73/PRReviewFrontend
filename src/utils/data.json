@@ -1,12 +1,21 @@
 {
     "whoIsWorking": [
-        "Kaushik",
-        "Shivam",
-        "Harsh"
+        "Kaushik Jain",
+        "Shivam Raj",
+        "Animesh Sharma",
+        "Deepak Harsh",
+        "Shivam Raj",
+        "Harsh Kumar",
+        "Nitin Sharma",
+        "Piyush Dave",
+        "Rahul Bhati",
+        "Annapurna Sambhang",
+        "Ayush Porwal",
+        "Mythri V Prabhu"
     ],
     "gradingOptions": [
-        "Excellent",
-        "Satisfactory",
-        "Critical"
+        " 0 - Excellent",
+        "1 - Satisfactory",
+        "2 - Critical"
     ]
 }
