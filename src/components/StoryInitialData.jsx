@@ -7,8 +7,8 @@ import DevelopersSelectDropdown from "./DevelopersSelectDropdown";
 import Modal from "./Modal";
 
 const StoryInitialData = ({
-  isStoryInitailDataFormOpen,
-  setIsStoryInitailDataFormOpen,
+  isStoryInitialDataFormOpen,
+  setIsStoryInitialDataFormOpen,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -44,13 +44,14 @@ const StoryInitialData = ({
       formik.resetForm();
     },
   });
-  setIsStoryInitailDataFormOpen;
   const toggleModal = () =>
-    setIsStoryInitailDataFormOpen(!isStoryInitailDataFormOpen);
+    setIsStoryInitialDataFormOpen(!isStoryInitialDataFormOpen);
+
+  console.log("StoryInitialData");
 
   return (
     <Modal
-      isOpen={isStoryInitailDataFormOpen}
+      isOpen={isStoryInitialDataFormOpen}
       toggleModal={toggleModal}
       onSubmit={formik.handleSubmit}
       title={"Add Your Story"}
@@ -169,13 +170,6 @@ const StoryInitialData = ({
             )}
           </div>
         </div>
-
-        {/* <button
-          type="submit"
-          className="cursor-pointer w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-        >
-          Submit
-        </button> */}
       </form>
     </Modal>
   );

@@ -1,10 +1,14 @@
 import { useFormik } from "formik";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { LOGIN_FORM_URL } from "../utils/constants";
-import { BlueButton, GrayButton } from "./buttons";
+import Modal from "./Modal";
+import ChangePasswordForm from "./ChangePasswordForm";
+import { useState } from "react";
 
-const LoginForm = () => {
+const LoginForm = ({ isLoginFormOpen, setIsLoginFormOpen }) => {
+  const [isChangePasswordFormOpen, setIsChangePasswordFormOpen] =
+    useState(false);
+
   const formik = useFormik({
     initialValues: { username: "", password: "" },
     onSubmit: (values) => {
@@ -14,48 +18,64 @@ const LoginForm = () => {
         .catch((error) => alert(error.response.data.message));
     },
   });
-  const navigate = useNavigate();
 
+  //  Todo : Implement the OpenChangePasswordForm function to open change password form above the login form
   const OpenChangePasswordForm = () => {
-    navigate("/change-password");
+    console.log("OpenChangePasswordForm clicked ", isChangePasswordFormOpen);
+    setIsChangePasswordFormOpen(!isChangePasswordFormOpen);
   };
 
+  const toggleModal = () => setIsLoginFormOpen(!isLoginFormOpen);
+
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="bg-white p-6 shadow-md w-full max-w-md"
-    >
-      <h2 className="text-xl font-semibold mb-4">Login</h2>
-      <div className="mb-4">
-        <label className="block">Username</label>
-        <input
-          type="text"
-          name="username"
-          onChange={formik.handleChange}
-          value={formik.values.username}
-          className="w-full p-2 border"
+    <>
+      {isChangePasswordFormOpen && (
+        <ChangePasswordForm
+          isChangePasswordFormOpen={isChangePasswordFormOpen}
+          setIsChangePasswordFormOpen={setIsChangePasswordFormOpen}
         />
-      </div>
-      <div className="mb-4">
-        <label className="block">Password</label>
-        <input
-          type="password"
-          name="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          className="w-full p-2 border"
-        />
-      </div>
-      <div className="flex flex-col gap-3 justify-around items-end">
-        <BlueButton text="Login" type="submit" />
-        <span
-          className="text-blue-600  cursor-pointer underline"
-          onClick={OpenChangePasswordForm}
+      )}
+      <Modal
+        isOpen={isLoginFormOpen}
+        toggleModal={toggleModal}
+        onSubmit={formik.handleSubmit}
+        title={`Login Form`}
+      >
+        <form
+          onSubmit={formik.handleSubmit}
+          className="bg-white p-6 shadow-md w-full"
         >
-          Change Password
-        </span>
-      </div>
-    </form>
+          <div className="mb-4">
+            <label className="block">Username</label>
+            <input
+              type="text"
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.username}
+              className="w-full p-2 border"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              className="w-full p-2 border"
+            />
+          </div>
+          <div className="flex flex-col gap-3 justify-around items-end">
+            <span
+              className="text-blue-600  cursor-pointer underline"
+              onClick={() => OpenChangePasswordForm()}
+            >
+              Change Password
+            </span>
+          </div>
+        </form>
+      </Modal>
+    </>
   );
 };
 

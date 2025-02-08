@@ -5,7 +5,11 @@ import Modal from "./Modal";
 import { useState } from "react";
 import DevelopersSelectDropdown from "./DevelopersSelectDropdown";
 
-const ReviewerForm = ({ isReviewerFormOpen, setIsReviewerFormOpen }) => {
+const ReviewerForm = ({
+  isReviewerFormOpen,
+  setIsReviewerFormOpen,
+  reviewerName = "User",
+}) => {
   const formik = useReviewerForm();
   const toggleModal = () => setIsReviewerFormOpen(!isReviewerFormOpen);
   const handleSubmit = () => {
@@ -17,7 +21,7 @@ const ReviewerForm = ({ isReviewerFormOpen, setIsReviewerFormOpen }) => {
       isOpen={isReviewerFormOpen}
       toggleModal={toggleModal}
       onSubmit={handleSubmit}
-      title={`${"Test"}'s Reviewer Form`}
+      title={`${reviewerName}'s Reviewer Form`}
     >
       <form
         onSubmit={formik.handleSubmit}
