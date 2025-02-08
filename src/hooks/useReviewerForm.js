@@ -7,19 +7,29 @@ const useReviewerForm = () => {
   const formik = useFormik({
     initialValues: {
       storyNumber: "",
-      whoIsWorking: "",
+      storyName: "",
+      storyLink: "",
+      prLink: "",
+      personWorkingOn: "",
+      reviewer: "",
       overallGrading: "",
-      criticalComments: "",
       codingGuidelineComments: "",
       comment: "",
     },
     validationSchema: Yup.object({
       storyNumber: Yup.number().required("Story Number is required"),
-      whoIsWorking: Yup.string().required(
+      storyName: Yup.string().required("Story Name is required"),
+      storyLink: Yup.string()
+        .url("Must be a valid URL")
+        .required("Story Link is required"),
+      prLink: Yup.string()
+        .url("Must be a valid URL")
+        .required("Story Link is required"),
+      personWorkingOn: Yup.string().required(
         "Please select who is working on this"
       ),
+      reviewer: Yup.string().required("Please select who is working on this"),
       overallGrading: Yup.string().required("Overall Grading is required"),
-      criticalComments: Yup.number().required("Critical Comments is required"),
       codingGuidelineComments: Yup.number().required(
         "Coding Guideline Comments is required"
       ),

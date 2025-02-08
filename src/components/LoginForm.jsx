@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { LOGIN_FORM_URL } from "../utils/constants";
+import { BlueButton, GrayButton } from "./buttons";
 
 const LoginForm = () => {
   const formik = useFormik({
@@ -12,6 +14,11 @@ const LoginForm = () => {
         .catch((error) => alert(error.response.data.message));
     },
   });
+  const navigate = useNavigate();
+
+  const OpenChangePasswordForm = () => {
+    navigate("/change-password");
+  };
 
   return (
     <form
@@ -39,9 +46,15 @@ const LoginForm = () => {
           className="w-full p-2 border"
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white py-2 px-4">
-        Login
-      </button>
+      <div className="flex flex-col gap-3 justify-around items-end">
+        <BlueButton text="Login" type="submit" />
+        <span
+          className="text-blue-600  cursor-pointer underline"
+          onClick={OpenChangePasswordForm}
+        >
+          Change Password
+        </span>
+      </div>
     </form>
   );
 };

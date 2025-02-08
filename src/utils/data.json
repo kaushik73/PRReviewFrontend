@@ -1,20 +1,25 @@
 {
-    "whoIsWorking": [
-        "Kaushik Jain",
-        "Shivam Raj",
+    "personWorkingOn": [
         "Animesh Sharma",
+        "Annapurna Ramakrishna Shanbhag",
+        "Ayush Porwal",
         "Deepak Harsh",
-        "Shivam Raj",
-        "Harsh Kumar",
+        "Harshita D Bhardwaj",
+        "Kaushik Jain",
+        "Mythri V Prabhu",
         "Nitin Sharma",
+        "Nomula SaiChaitanya",
         "Piyush Dave",
         "Rahul Bhati",
-        "Annapurna Sambhang",
-        "Ayush Porwal",
-        "Mythri V Prabhu"
+        "S Manikandan",
+        "Shivam Raj",
+        "Vishal Kumar Khatri",
+        "Devesh Agarwal",
+        "Harsh Kumar",
+        "Nikita Agarwal"
     ],
     "gradingOptions": [
-        " 0 - Excellent",
+        "0 - Excellent",
         "1 - Satisfactory",
         "2 - Critical"
     ]
