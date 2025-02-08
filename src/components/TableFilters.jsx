@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DevelopersSelectDropdown from "./DevelopersSelectDropdown";
-import { GreenButton, RedButton } from "./buttons";
+import { GrayButton, GreenButton, RedButton } from "./buttons";
 
 const TableFilters = () => {
   const [filterForm, setFilterForm] = useState({
@@ -21,6 +21,10 @@ const TableFilters = () => {
     console.log(filterForm);
   };
 
+  const handleNeedMyReviewClick = () => {
+    console.log("Need My Review Clicked");
+  };
+
   return (
     <div className="p-4 bg-white shadow-md rounded-md mb-4">
       <form className="flex flex-wrap items-end gap-4">
@@ -30,7 +34,7 @@ const TableFilters = () => {
             name="personWorkingOn"
             onChange={handleFilterForm}
             value={filterForm.personWorkingOn}
-            label={"Name"}
+            label={"Assigned To "}
           />
         </div>
 
@@ -48,6 +52,7 @@ const TableFilters = () => {
             className="mt-1 block w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
+        <GrayButton text="Need My Review" onClick={handleNeedMyReviewClick} />
 
         {/* Submit Button */}
         <GreenButton text="Submit" onClick={handleSubmit} type="submit" />

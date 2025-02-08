@@ -51,6 +51,7 @@
 // App.js
 import { useState } from "react";
 import Routing from "./components/Routing";
+import { UserProvider } from "./context/userContext";
 
 function App() {
   const [stories, setStories] = useState([]);
@@ -64,11 +65,13 @@ function App() {
   };
 
   return (
-    <Routing
-      stories={stories}
-      handleFormSubmit={handleFormSubmit}
-      handleFillReviewerForm={handleFillReviewerForm}
-    />
+    <UserProvider>
+      <Routing
+        stories={stories}
+        handleFormSubmit={handleFormSubmit}
+        handleFillReviewerForm={handleFillReviewerForm}
+      />
+    </UserProvider>
   );
 }
 

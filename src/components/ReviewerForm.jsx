@@ -1,36 +1,56 @@
-import data from "../utils/data.json";
-import useReviewerForm from "../hooks/useReviewerForm";
-import { GreenButton } from "./buttons";
+import { useEffect, useState } from "react";
+import { useFormik } from "formik";
 import Modal from "./Modal";
-import { useState } from "react";
 import DevelopersSelectDropdown from "./DevelopersSelectDropdown";
+import { GreenButton } from "./buttons";
 
 const ReviewerForm = ({
   isReviewerFormOpen,
   setIsReviewerFormOpen,
-  reviewerName = "User",
+  data: data1,
 }) => {
-  const formik = useReviewerForm();
+  const [selectedReviewer, setSelectedReviewer] = useState(
+    data1?.reviewer1 || data1?.reviewer2 || "N/A"
+  );
+
+  const formik = useFormik({
+    initialValues: {
+      storyNumber: data1.storyNumber || "",
+      storyName: data1.storyName || "",
+      storyLink: data1.storyLink || "",
+      prLink: data1.prLink || "",
+      personWorkingOn: data1.personWorkingOn || "",
+      reviewer: selectedReviewer,
+      overallGrading: "",
+      codingGuidelineComments: "",
+      comment: "",
+    },
+    onSubmit: (values) => {
+      console.log("Form Data Submitted:", values);
+    },
+  });
+
   const toggleModal = () => setIsReviewerFormOpen(!isReviewerFormOpen);
-  const handleSubmit = () => {
-    console.log(formik.values);
-  };
+
+  // Handle dynamic reviewer changes when data updates
+  useEffect(() => {
+    if (data1.reviewer1) {
+      formik.setFieldValue("reviewer", data1.reviewer1);
+      setSelectedReviewer(data1?.reviewer1);
+    } else if (data1.reviewer2) {
+      formik.setFieldValue("reviewer", data1.reviewer2);
+      setSelectedReviewer(data1?.reviewer2);
+    }
+  }, [data1]);
 
   return (
     <Modal
       isOpen={isReviewerFormOpen}
       toggleModal={toggleModal}
-      onSubmit={handleSubmit}
-      title={`${reviewerName}'s Reviewer Form`}
+      onSubmit={formik.handleSubmit}
+      title={`${selectedReviewer}'s Reviewer Form`}
     >
-      <form
-        onSubmit={formik.handleSubmit}
-        className="bg-white shadow-md1 rounded px-6  max-h-full overflow-auto "
-      >
-        {/* <h2 className="text-lg text-center font-medium text-gray-700 mb-4">
-          Reviewer : {"Test"}
-        </h2> */}
-
+      <form className="bg-white shadow-md rounded px-6 max-h-full overflow-auto">
         <div className="flex">
           {/* Story Number */}
           <div className="mb-4 w-1/2 mx-4">
@@ -44,11 +64,6 @@ const ReviewerForm = ({
               value={formik.values.storyNumber}
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             />
-            {formik.errors.storyNumber && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.storyNumber}
-              </p>
-            )}
           </div>
 
           {/* Story Name */}
@@ -63,15 +78,10 @@ const ReviewerForm = ({
               value={formik.values.storyName}
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             />
-            {formik.errors.storyName && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.storyName}
-              </p>
-            )}
           </div>
         </div>
 
-        <div className="flex ">
+        <div className="flex">
           {/* Story Link */}
           <div className="mb-4 w-1/2 mx-4">
             <label className="block text-sm font-medium text-gray-700">
@@ -84,15 +94,10 @@ const ReviewerForm = ({
               value={formik.values.storyLink}
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             />
-            {formik.errors.storyLink && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.storyLink}
-              </p>
-            )}
           </div>
 
           {/* PR Link */}
-          <div className="mb-4 w-1/2">
+          <div className="mb-4 w-1/2 mx-4">
             <label className="block text-sm font-medium text-gray-700">
               PR Link
             </label>
@@ -103,28 +108,18 @@ const ReviewerForm = ({
               value={formik.values.prLink}
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             />
-            {formik.errors.prLink && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.prLink}
-              </p>
-            )}
           </div>
         </div>
 
-        <div className="flex ">
+        <div className="flex">
           {/* Person Working On */}
-          <div className="mb-4  mx-4">
+          <div className="mb-4 mx-4">
             <DevelopersSelectDropdown
               label="Person Working On"
               name="personWorkingOn"
               onChange={formik.handleChange}
               value={formik.values.personWorkingOn}
             />
-            {formik.errors.personWorkingOn && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.personWorkingOn}
-              </p>
-            )}
           </div>
 
           {/* Reviewer */}
@@ -135,14 +130,10 @@ const ReviewerForm = ({
               onChange={formik.handleChange}
               value={formik.values.reviewer}
             />
-            {formik.errors.reviewer && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.reviewer}
-              </p>
-            )}
           </div>
         </div>
-        <div className="flex ">
+
+        <div className="flex">
           {/* Overall Grading */}
           <div className="mb-4 w-1/2 mx-4">
             <label className="block text-sm font-medium text-gray-700">
@@ -155,24 +146,18 @@ const ReviewerForm = ({
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             >
               <option value="">Select</option>
-              {data.gradingOptions.map((option) => (
+              {data1.gradingOptions?.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
               ))}
             </select>
-            {formik.errors.overallGrading && (
-              <p className="text-red-500 text-xs mt-1">
-                {formik.errors.overallGrading}
-              </p>
-            )}
           </div>
 
           {/* Coding Guideline Comments */}
           <div className="mb-4 w-1/2 mx-4">
             <label className="block text-sm font-medium text-gray-700">
               Number of Comments on Coding Guidelines Missed
-              {/* orange */}
             </label>
             <input
               type="number"
@@ -181,11 +166,6 @@ const ReviewerForm = ({
               value={formik.values.codingGuidelineComments}
               className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 text-orange-500"
             />
-            {formik.errors.codingGuidelineComments && (
-              <p className="text-orange-500 text-xs mt-1">
-                {formik.errors.codingGuidelineComments}
-              </p>
-            )}
           </div>
         </div>
 
@@ -201,9 +181,10 @@ const ReviewerForm = ({
             className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             rows="4"
           />
-          {formik.errors.comment && (
-            <p className="text-red-500 text-xs mt-1">{formik.errors.comment}</p>
-          )}
+        </div>
+
+        <div className="flex justify-end">
+          <GreenButton type="submit">Submit</GreenButton>
         </div>
       </form>
     </Modal>

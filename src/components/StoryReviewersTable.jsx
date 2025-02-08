@@ -10,6 +10,7 @@ import { data } from "../utils/tempStoryData";
 import StoryInitialData from "./StoryInitialData";
 import { GrayButton } from "./buttons";
 
+//  Todo : get data from backend
 const StoryReviewersTable = () => {
   const [copiedLinks, setCopiedLinks] = useState({});
   const [isReviewerFormOpen, setIsReviewerFormOpen] = useState({});
@@ -43,7 +44,7 @@ const StoryReviewersTable = () => {
   return (
     <>
       <div className="overflow-x-auto">
-        <ToastContainer />
+        <ToastContainer newestOnTop />
         <div className="flex gap-4 justify-between items-center">
           <div className="w-full md:w-3/4">
             <TableFilters />
@@ -101,7 +102,7 @@ const StoryReviewersTable = () => {
                           copyIconClicked(index, "Story", row.storyLink)
                         }
                       >
-                        {copiedLinks[`${index}_StoryLink`] ? (
+                        {copiedLinks[`${index}_Story`] ? (
                           <CopyCheckIcon />
                         ) : (
                           <CopyIcon />
@@ -128,7 +129,7 @@ const StoryReviewersTable = () => {
                         className="cursor-pointer"
                         onClick={() => copyIconClicked(index, "PR", row.prLink)}
                       >
-                        {copiedLinks[`${index}_PRLink`] ? (
+                        {copiedLinks[`${index}_PR`] ? (
                           <CopyCheckIcon />
                         ) : (
                           <CopyIcon />
@@ -149,7 +150,7 @@ const StoryReviewersTable = () => {
                       setIsReviewerFormOpen={() =>
                         openReviewerForm(index, "reviewer1")
                       }
-                      reviewerName={row.reviewer1}
+                      data={row}
                     />
                   )}
                   {row.reviewer1}{" "}
