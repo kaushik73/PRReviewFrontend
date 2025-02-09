@@ -1,38 +1,26 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import data from "../utils/data.json";
 import axios from "axios";
 import { STORY_REVIEWERS_FORM_URL } from "../utils/constants";
 import Modal from "./Modal";
 import DevelopersSelectDropdown from "./DevelopersSelectDropdown";
 import { GreenButton } from "./buttons";
 
-const EditTableDataForm = () => {
+const EditTableDataForm = ({ data: data1 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-  const handleSubmit = () => {
-    if (inputValue.trim() !== "") {
-      alert(`Assigned value: ${inputValue}`);
-      setInputValue("");
-      toggleModal();
-    } else {
-      alert("Please enter a valid number.");
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
-      storyNumber: "",
-      storyName: "",
-      storyLink: "",
-      prLink: "",
-      personWorkingOn: "",
-      reviewer1: "",
-      reviewer2: "",
+      storyNumber: data1.storyNumber || "",
+      storyName: data1.storyName || "",
+      storyLink: data1.storyLink || "",
+      prLink: data1.prLink || "",
+      developerNames: data1.developerNames || "",
+      reviewer1: data1.reviewer1 || "",
+      reviewer2: data1.reviewer2 || "",
     },
     validationSchema: Yup.object({
       storyNumber: Yup.number().required("Story Number is required"),
@@ -43,12 +31,14 @@ const EditTableDataForm = () => {
       prLink: Yup.string()
         .url("Must be a valid URL")
         .required("Story Link is required"),
-      personWorkingOn: Yup.string().required(
+      developerNames: Yup.string().required(
         "Please select who is working on this"
       ),
       reviewer1: Yup.string().required("Reviewer 1 is required"),
       reviewer2: Yup.string().required("Reviewer 2 is required"),
     }),
+    validateOnChange: false, // Disable validation on change
+    validateOnBlur: false, // Disable validation on blur
     onSubmit: (values) => {
       axios
         .post(STORY_REVIEWERS_FORM_URL, {
@@ -68,11 +58,11 @@ const EditTableDataForm = () => {
       <Modal
         isOpen={isModalOpen}
         toggleModal={toggleModal}
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
         title="Edit Form "
       >
         <form
-          onSubmit={formik.handleSubmit}
+          // onSubmit={formik.handleSubmit}
           className="bg-white shadow-md1 rounded px-6  max-h-full overflow-auto "
         >
           <div className="flex">
@@ -191,13 +181,13 @@ const EditTableDataForm = () => {
           <div className="mb-4 w-1/2 mx-4">
             <DevelopersSelectDropdown
               label="Person Working On"
-              name="personWorkingOn"
+              name="developerNames"
               onChange={formik.handleChange}
-              value={formik.values.personWorkingOn}
+              value={formik.values.developerNames}
             />
-            {formik.errors.personWorkingOn && (
+            {formik.errors.developerNames && (
               <p className="text-red-500 text-xs mt-1">
-                {formik.errors.personWorkingOn}
+                {formik.errors.developerNames}
               </p>
             )}
           </div>

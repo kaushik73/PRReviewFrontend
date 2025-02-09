@@ -15,7 +15,7 @@ const StoryInitialData = ({
       storyNumber: "",
       storyName: "",
       storyLink: "",
-      personWorkingOn: "",
+      developerNames: "",
       reviewer1: "",
       reviewer2: "",
     },
@@ -25,7 +25,7 @@ const StoryInitialData = ({
       storyLink: Yup.string()
         .url("Must be a valid URL")
         .required("Story Link is required"),
-      personWorkingOn: Yup.string().required(
+      developerNames: Yup.string().required(
         "Please select who is working on this"
       ),
       reviewer1: Yup.string().required("Reviewer 1 is required"),
@@ -128,13 +128,13 @@ const StoryInitialData = ({
         <div className="mb-4 mx-0">
           <DevelopersSelectDropdown
             label="Person Working On"
-            name="personWorkingOn"
+            name="developerNames"
             onChange={formik.handleChange}
-            value={formik.values.personWorkingOn}
+            value={formik.values.developerNames}
           />
-          {formik.errors.personWorkingOn && (
+          {formik.errors.developerNames && (
             <p className="text-red-500 text-xs mt-1">
-              {formik.errors.personWorkingOn}
+              {formik.errors.developerNames}
             </p>
           )}
         </div>

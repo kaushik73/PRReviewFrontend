@@ -10,7 +10,7 @@ const useReviewerForm = () => {
       storyName: "",
       storyLink: "",
       prLink: "",
-      personWorkingOn: "",
+      developerNames: "",
       reviewer: "",
       overallGrading: "",
       codingGuidelineComments: "",
@@ -25,7 +25,7 @@ const useReviewerForm = () => {
       prLink: Yup.string()
         .url("Must be a valid URL")
         .required("Story Link is required"),
-      personWorkingOn: Yup.string().required(
+      developerNames: Yup.string().required(
         "Please select who is working on this"
       ),
       reviewer: Yup.string().required("Please select who is working on this"),

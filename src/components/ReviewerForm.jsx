@@ -19,7 +19,7 @@ const ReviewerForm = ({
       storyName: data1.storyName || "",
       storyLink: data1.storyLink || "",
       prLink: data1.prLink || "",
-      personWorkingOn: data1.personWorkingOn || "",
+      developerNames: data1.developerNames || "",
       reviewer: selectedReviewer,
       overallGrading: "",
       codingGuidelineComments: "",
@@ -116,9 +116,9 @@ const ReviewerForm = ({
           <div className="mb-4 mx-4">
             <DevelopersSelectDropdown
               label="Person Working On"
-              name="personWorkingOn"
+              name="developerNames"
               onChange={formik.handleChange}
-              value={formik.values.personWorkingOn}
+              value={formik.values.developerNames}
             />
           </div>
 
@@ -184,7 +184,7 @@ const ReviewerForm = ({
         </div>
 
         <div className="flex justify-end">
-          <GreenButton type="submit">Submit</GreenButton>
+          {/* <GreenButton type="submit">Submit</GreenButton> */}
         </div>
       </form>
     </Modal>
