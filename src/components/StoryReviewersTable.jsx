@@ -222,7 +222,7 @@ const StoryReviewersTable = () => {
                 </td>
                 <td className="flex flex-col px-4 py-2">
                   <EditTableDataForm data={row} />
-                  <CloseButton />
+                  <CloseButton storyNumber={row.storyNumber} />
                 </td>
               </tr>
             ))}

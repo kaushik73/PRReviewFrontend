@@ -2,17 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import Modal from "./Modal";
 import { RedButton } from "./buttons";
 
-const CloseButton = () => {
+const CloseButton = ({ storyNumber }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [sprintNumber, setsprintNumber] = useState("");
   const inputRef = useRef(null);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleSubmit = () => {
-    if (inputValue.trim() !== "" && inputValue > 0) {
-      alert(`Assigned value: ${inputValue}`);
-      setInputValue("");
+    if (sprintNumber.trim() !== "" && sprintNumber > 0) {
+      alert(`sprint & Story No are -  ${sprintNumber} , ${storyNumber}`);
+      setsprintNumber("");
       toggleModal();
     } else {
       alert("Please enter a valid sprint number.");
@@ -36,7 +36,7 @@ const CloseButton = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isModalOpen, inputValue]);
+  }, [isModalOpen, sprintNumber]);
 
   return (
     <div className="p-0">
@@ -54,8 +54,8 @@ const CloseButton = () => {
         </label>
         <input
           type="number"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={sprintNumber}
+          onChange={(e) => setsprintNumber(e.target.value)}
           className="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
           ref={inputRef}
         />
